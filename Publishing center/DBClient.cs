@@ -2,44 +2,64 @@
 using System;
 using System.Data;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace Publishing_center
 {
 	class DBClient
 	{
-		static async void AnotherMethod()
-		{
-			string connectionString = "Data Source=localhost;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+		static readonly string connectionString = "Data Source=localhost;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False;Database=Издательский центр";
 
-			// Создание подключения
-			SqlConnection connection = new SqlConnection(connectionString);
-			try
+		/// <summary>
+		/// Returns array of names, then every line
+		/// </summary>
+		/// <param name="command"></param>
+		/// <returns>array of names, then rows</returns>
+		static IEnumerable<string[]> ReadData(string command)
+		{
+			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
-				// Открываем подключение
 				connection.Open();
-				Console.WriteLine("Подключение открыто");
-			}
-			catch (SqlException ex)
-			{
-				Console.WriteLine(ex.Message);
-			}
-			finally
-			{
-				// если подключение открыто
-				if (connection.State == ConnectionState.Open)
+				SqlCommand sqlcommand = new SqlCommand(command, connection);
+				using (var reader = sqlcommand.ExecuteReader())
 				{
-					// закрываем подключение
-					await connection.CloseAsync();
-					Console.WriteLine("Подключение закрыто...");
+					int colNum = reader.FieldCount;
+					string[] array = new string[colNum];
+					for (int i = 0; i < colNum; i++)
+					{
+						array[i] = reader.GetName(i);
+					}
+					yield return array;
+
+					while (reader.Read())
+					{
+						for (int i = 0; i < colNum; i++)
+						{
+							array[i] = reader.GetValue(i).ToString();
+						}
+						yield return array;
+					}
 				}
+
 			}
-			Console.WriteLine("Программа завершила работу.");
-			Console.Read();
+		}
+
+		static IEnumerable<string[]> ReadAllData(string tableName)
+		{
+			string command = $"select * from {tableName};";
+			foreach (var stringArr in ReadData(command))
+			{
+				yield return stringArr;
+			}
 		}
 
 		static void Main()
 		{
-			AnotherMethod();
+			foreach (var strArr in ReadAllData("Писатель"))
+			{
+				string msg = String.Join(" ", strArr);
+				Console.WriteLine(msg);
+			}
 		}
 	}
 }
