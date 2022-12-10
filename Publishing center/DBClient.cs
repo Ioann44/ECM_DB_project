@@ -9,14 +9,14 @@ namespace Publishing_center
 	{
 		static async void AnotherMethod()
 		{
-			string connectionString = "Data Source=IVANS-LAPTOP;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+			string connectionString = "Data Source=localhost;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
 			// Создание подключения
 			SqlConnection connection = new SqlConnection(connectionString);
 			try
 			{
 				// Открываем подключение
-				await connection.OpenAsync();
+				connection.Open();
 				Console.WriteLine("Подключение открыто");
 			}
 			catch (SqlException ex)
