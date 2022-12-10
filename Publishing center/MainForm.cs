@@ -12,8 +12,6 @@ namespace Publishing_center
 {
 	public partial class MainForm : Form
 	{
-		int cntChangeText = 0;
-
 		public MainForm()
 		{
 			InitializeComponent();
@@ -26,7 +24,26 @@ namespace Publishing_center
 
 		private void ChoiceTable_TextUpdate(object sender, EventArgs e)
 		{
-			ChoiceTableLabel.Text = (++cntChangeText).ToString();
+			// reading data
+			var data = DBClient.ReadMatrix($"select * from {comboBox1.Text};");
+			// set num of rows and columns
+			int n = data.Length,
+				m = data[0].Length;
+			dataTable.RowCount = n - 1;
+			dataTable.ColumnCount = m;
+			// set headers
+			for (int j = 0; j < m; j++)
+			{
+				dataTable.Columns[j].HeaderText = data[0][j];
+			}
+			// set remaining data
+			for (int i = 1; i < n; i++)
+			{
+				for (int j = 0; j < m; j++)
+				{
+					dataTable[j, i - 1].Value = data[i][j];
+				}
+			}
 		}
 	}
 }

@@ -1,11 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <RootNamespace>Publishing_center</RootNamespace>
     <UseWindowsForms>true</UseWindowsForms>
-    <StartupObject>Publishing_center.DBClient</StartupObject>
+    <StartupObject>Publishing_center.Program</StartupObject>
     <ApplicationIcon />
   </PropertyGroup>
 
