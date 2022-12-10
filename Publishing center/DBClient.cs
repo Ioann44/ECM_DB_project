@@ -15,7 +15,7 @@ namespace Publishing_center
 		/// </summary>
 		/// <param name="command"></param>
 		/// <returns>array of names, then rows</returns>
-		static IEnumerable<string[]> ReadData(string command)
+		public static IEnumerable<string[]> ReadData(string command)
 		{
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
@@ -44,13 +44,23 @@ namespace Publishing_center
 			}
 		}
 
-		static IEnumerable<string[]> ReadAllData(string tableName)
+		public static IEnumerable<string[]> ReadAllData(string tableName)
 		{
 			string command = $"select * from {tableName};";
 			foreach (var stringArr in ReadData(command))
 			{
 				yield return stringArr;
 			}
+		}
+
+		public static string[][] ReadMatrix(string command)
+		{
+			List<string[]> matrix = new List<string[]>();
+			foreach (string[] stringArr in ReadData(command))
+			{
+				matrix.Add((string[])stringArr.Clone());
+			}
+			return matrix.ToArray();
 		}
 
 		static void Main()
