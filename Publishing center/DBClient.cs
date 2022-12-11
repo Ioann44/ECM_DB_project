@@ -9,7 +9,7 @@ namespace Publishing_center
 {
 	class DBClient
 	{
-		static readonly string connectionString = "Data Source=localhost;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False;Database=Издательский центр";
+		static readonly string connectionString = "Data Source=" + Environment.DB_name + ";Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False;Database=Издательский центр";
 
 		/// <summary>
 		/// Returns array of names, then every line
