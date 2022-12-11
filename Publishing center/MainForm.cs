@@ -24,8 +24,13 @@ namespace Publishing_center
 
 		private void ChoiceTable_TextUpdate(object sender, EventArgs e)
 		{
-			// reading data
+			if (!Tools.tableNames.Contains(comboBox1.Text))
+			{
+				dataTable.Columns.Clear();
+				return;
+			}
 			var data = DBClient.ReadMatrix($"select * from {comboBox1.Text};");
+			// reading data
 			// set num of rows and columns
 			int n = data.Length,
 				m = data[0].Length;
