@@ -6,6 +6,8 @@ namespace Publishing_center
 {
 	static class Tools
 	{
+		public static string[][] readedTableData = new string[0][];
+
 		//public static HashSet<string> tableNames = new HashSet<string>("Писатель Контракт Книга Заказчик Заказ Авторство".Split(" "));
 		public static Dictionary<string, int[]> tableNames = new Dictionary<string, int[]>()
 		{

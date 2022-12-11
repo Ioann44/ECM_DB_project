@@ -29,12 +29,13 @@ namespace Publishing_center
 				dataTable.Columns.Clear();
 				return;
 			}
-			var data = DBClient.ReadMatrix($"select * from {comboBox1.Text};");
+			Tools.readedTableData = DBClient.ReadMatrix($"select * from {comboBox1.Text};");
+			ref string[][] data = ref Tools.readedTableData;
 			// reading data
 			// set num of rows and columns
 			int n = data.Length,
 				m = data[0].Length;
-			dataTable.RowCount = n - 1;
+			dataTable.RowCount = n;
 			dataTable.ColumnCount = m;
 			// set headers
 			for (int j = 0; j < m; j++)
@@ -50,6 +51,7 @@ namespace Publishing_center
 					dataTable[j, i - 1].Style.BackColor = Color.White;
 				}
 			}
+			// add blank row for adding ability
 			// enable editing for all columns
 			for (int col_i = 0; col_i < m; col_i++)
 			{
@@ -62,6 +64,41 @@ namespace Publishing_center
 				for (int i = 0; i < n - 1; i++)
 				{
 					dataTable[col_i, i].Style.BackColor = Color.LightYellow;
+				}
+			}
+		}
+
+		private void UploadData(object sender, EventArgs e)
+		{
+			if (!Tools.tableNames.ContainsKey(comboBox1.Text))
+			{
+				dataTable.Columns.Clear();
+				return;
+			}
+			var dataSrc = Tools.readedTableData;
+			// reading data
+			string[][] commandData = new string[3][];
+			commandData[0] = (string[])dataSrc[0].Clone();
+			int n = dataSrc.Length - 1,
+				m = dataSrc[0].Length;
+			// scanning data
+			for (int i = 0; i < n; i++)
+			{
+				bool toUpdate = false;
+				commandData[1] = (string[])dataSrc[i + 1].Clone();
+				commandData[2] = new string[m];
+				for (int j = 0; j < m; j++)
+				{
+					commandData[2][j] = (string)dataTable[j, i].Value;
+					if (!commandData[1][j].Equals(commandData[2][j]))
+					{
+						toUpdate = true;
+					}
+				}
+				if (toUpdate)
+				{
+					bool result = DBClient.UpdateData(comboBox1.Text, commandData);
+					ChoiceTable_TextUpdate(new object(), new EventArgs());
 				}
 			}
 		}

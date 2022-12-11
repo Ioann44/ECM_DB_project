@@ -63,13 +63,49 @@ namespace Publishing_center
 			return matrix.ToArray();
 		}
 
+		/// <summary>
+		/// Update data in table
+		/// </summary>
+		/// <param name="tableName"></param>
+		/// <param name="data">Array 3xNumOfCols, where first row - names of attributes, second row - source data, third row - new data</param>
+		public static bool UpdateData(string tableName, in string[][] data)
+		{
+			// insert Авторство (ID_автора, Шифр_книги) values ('1', '1');
+			string command = $"update {tableName} set ";
+			for (int j = 0; j < data[0].Length; j++)
+			{
+				command += $"{data[0][j]}='{data[2][j]}'" + (j == data[0].Length - 1 ? ' ' : ',');
+			}
+			command += "where ";
+			for (int j = 0; j < data[0].Length; j++)
+			{
+				command += $"{data[0][j]} = '{data[1][j]}'" + (j < data[0].Length - 1 ? " and " : "");
+			}
+			command += ';';
+			//Console.WriteLine(command);
+			//return true;
+			using (SqlConnection connection = new SqlConnection(connectionString))
+			{
+				connection.Open();
+				SqlCommand sqlcommand = new SqlCommand(command, connection);
+				int changedNum = sqlcommand.ExecuteNonQuery();
+				return changedNum != 0;
+			}
+		}
+
 		static void Main()
 		{
-			foreach (var strArr in ReadAllData("Писатель"))
-			{
-				string msg = String.Join(" ", strArr);
-				Console.WriteLine(msg);
-			}
+			//foreach (var strArr in ReadAllData("Писатель"))
+			//{
+			//	string msg = String.Join(" ", strArr);
+			//	Console.WriteLine(msg);
+			//}
+			string[][] comData = new string[3][];
+			comData[0] = "attr1 attr2 attr3".Split();
+			comData[1] = "src1 src2 src3".Split();
+			comData[2] = "dest1 dest2 dest3".Split();
+			bool res = UpdateData("Авторство", comData);
+			Console.WriteLine(res);
 		}
 	}
 }

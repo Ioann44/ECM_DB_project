@@ -32,6 +32,7 @@ namespace Publishing_center
 			this.ChoiceTableLabel = new System.Windows.Forms.Label();
 			this.comboBox1 = new System.Windows.Forms.ComboBox();
 			this.dataTable = new System.Windows.Forms.DataGridView();
+			this.uploadDataButton = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.dataTable)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -71,11 +72,22 @@ namespace Publishing_center
 			this.dataTable.Size = new System.Drawing.Size(735, 371);
 			this.dataTable.TabIndex = 3;
 			// 
+			// uploadDataButton
+			// 
+			this.uploadDataButton.Location = new System.Drawing.Point(538, 42);
+			this.uploadDataButton.Name = "uploadDataButton";
+			this.uploadDataButton.Size = new System.Drawing.Size(209, 62);
+			this.uploadDataButton.TabIndex = 4;
+			this.uploadDataButton.Text = "Применить изменения";
+			this.uploadDataButton.UseVisualStyleBackColor = true;
+			this.uploadDataButton.Click += new System.EventHandler(this.UploadData);
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(759, 597);
+			this.Controls.Add(this.uploadDataButton);
 			this.Controls.Add(this.dataTable);
 			this.Controls.Add(this.comboBox1);
 			this.Controls.Add(this.ChoiceTableLabel);
@@ -92,6 +104,7 @@ namespace Publishing_center
 		private System.Windows.Forms.Label ChoiceTableLabel;
 		private System.Windows.Forms.ComboBox comboBox1;
 		private System.Windows.Forms.DataGridView dataTable;
+		private System.Windows.Forms.Button uploadDataButton;
 	}
 }
 
