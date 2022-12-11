@@ -3,6 +3,7 @@ using System;
 using System.Data;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Publishing_center
 {
@@ -68,18 +69,23 @@ namespace Publishing_center
 		/// </summary>
 		/// <param name="tableName"></param>
 		/// <param name="data">Array 3xNumOfCols, where first row - names of attributes, second row - source data, third row - new data</param>
-		public static bool UpdateData(string tableName, in string[][] data)
+		public static bool UpdateData(string tableName, string[][] data)
 		{
 			// insert Авторство (ID_автора, Шифр_книги) values ('1', '1');
 			string command = $"update {tableName} set ";
 			for (int j = 0; j < data[0].Length; j++)
 			{
-				command += $"{data[0][j]}='{data[2][j]}'" + (j == data[0].Length - 1 ? ' ' : ',');
+				if (Tools.tableNames[tableName].Contains(j))
+					continue;
+
+				string data2j = data[2][j] != null ? $"'{data[2][j]}'" : " null";
+				command += $"{data[0][j]}=" + data2j + (j == data[0].Length - 1 ? ' ' : ',');
 			}
 			command += "where ";
 			for (int j = 0; j < data[0].Length; j++)
 			{
-				command += $"{data[0][j]} = '{data[1][j]}'" + (j < data[0].Length - 1 ? " and " : "");
+				string data1j = data[1][j].Length != 0 ? $"='{data[1][j]}'" : " is null";
+				command += data[0][j].ToString() + data1j + (j < data[0].Length - 1 ? " and " : "");
 			}
 			command += ';';
 			//Console.WriteLine(command);
@@ -87,8 +93,14 @@ namespace Publishing_center
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
 				connection.Open();
+				int changedNum = 0;
 				SqlCommand sqlcommand = new SqlCommand(command, connection);
-				int changedNum = sqlcommand.ExecuteNonQuery();
+				try
+				{
+					changedNum = sqlcommand.ExecuteNonQuery();
+				}
+				catch (Exception)
+				{ }
 				return changedNum != 0;
 			}
 		}
