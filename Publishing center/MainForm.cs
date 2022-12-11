@@ -24,7 +24,7 @@ namespace Publishing_center
 
 		private void ChoiceTable_TextUpdate(object sender, EventArgs e)
 		{
-			if (!Tools.tableNames.Contains(comboBox1.Text))
+			if (!Tools.tableNames.ContainsKey(comboBox1.Text))
 			{
 				dataTable.Columns.Clear();
 				return;
@@ -47,6 +47,21 @@ namespace Publishing_center
 				for (int j = 0; j < m; j++)
 				{
 					dataTable[j, i - 1].Value = data[i][j];
+					dataTable[j, i - 1].Style.BackColor = Color.White;
+				}
+			}
+			// enable editing for all columns
+			for (int col_i = 0; col_i < m; col_i++)
+			{
+				dataTable.Columns[col_i].ReadOnly = false;
+			}
+			// disable editing for certain columns
+			foreach (int col_i in Tools.tableNames[comboBox1.Text])
+			{
+				dataTable.Columns[col_i].ReadOnly = true;
+				for (int i = 0; i < n - 1; i++)
+				{
+					dataTable[col_i, i].Style.BackColor = Color.LightYellow;
 				}
 			}
 		}
