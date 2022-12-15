@@ -69,9 +69,8 @@ namespace Publishing_center
 		/// </summary>
 		/// <param name="tableName"></param>
 		/// <param name="data">Array 3xNumOfCols, where first row - names of attributes, second row - source data, third row - new data</param>
-		public static bool UpdateData(string tableName, string[][] data)
+		public static bool UpdateData(in string tableName, in string[][] data)
 		{
-			// insert Авторство (ID_автора, Шифр_книги) values ('1', '1');
 			string command = $"update {tableName} set ";
 			for (int j = 0; j < data[0].Length; j++)
 			{
@@ -84,12 +83,48 @@ namespace Publishing_center
 			command += "where ";
 			for (int j = 0; j < data[0].Length; j++)
 			{
-				string data1j = data[1][j].Length != 0 ? $"='{data[1][j]}'" : " is null";
+				string data1j = data[1][j].Length != 0 ? $"='{data[1][j]}'" : $" is null or {data[0][j]} = ''";
 				command += data[0][j].ToString() + data1j + (j < data[0].Length - 1 ? " and " : "");
 			}
 			command += ';';
-			//Console.WriteLine(command);
-			//return true;
+			// execute command
+			return ExecuteModificationCommand(command, connectionString) != 0;
+		}
+
+		public static bool DeleteData(in string tableName, in string[][] data)
+		{
+			// generate command
+			string command = $"delete from {tableName} where ";
+			for (int j = 0; j < data[0].Length; j++)
+			{
+				string data1j = data[1][j].Length != 0 ? $"='{data[1][j]}'" : $" is null or {data[0][j]} = ''";
+				command += data[0][j].ToString() + data1j + (j < data[0].Length - 1 ? " and " : "");
+			}
+			command += ';';
+			// execute command
+			return ExecuteModificationCommand(command, connectionString) != 0;
+		}
+
+		public static bool InsertData(in string tableName, in string[][] data)
+		{
+			// insert Авторство (ID_автора, Шифр_книги) values ('1', '1');
+			string command = $"insert {tableName} (";
+			for (int j = 0; j < data[0].Length - 1; j++)
+			{
+				command += data[0][j] + ',';
+			}
+			command += data[0][data[0].Length - 1] + ") values (";
+			for (int j = 0; j < data[0].Length; j++)
+			{
+				string data2j = data[2][j] != null ? $"'{data[2][j]}'" : " null";
+				command += data2j + (j == data[0].Length - 1 ? ' ' : ',');
+			}
+			command += ");";
+			return ExecuteModificationCommand(command, connectionString) != 0;
+		}
+
+		static int ExecuteModificationCommand(in string command, in string connectionString)
+		{
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
 				connection.Open();
@@ -101,7 +136,7 @@ namespace Publishing_center
 				}
 				catch (Exception)
 				{ }
-				return changedNum != 0;
+				return changedNum;
 			}
 		}
 

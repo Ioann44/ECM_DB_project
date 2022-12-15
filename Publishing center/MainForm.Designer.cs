@@ -30,9 +30,10 @@ namespace Publishing_center
 		private void InitializeComponent()
 		{
 			this.ChoiceTableLabel = new System.Windows.Forms.Label();
-			this.comboBox1 = new System.Windows.Forms.ComboBox();
+			this.tableName_ComboBox = new System.Windows.Forms.ComboBox();
 			this.dataTable = new System.Windows.Forms.DataGridView();
 			this.uploadDataButton = new System.Windows.Forms.Button();
+			this.deleteButton = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.dataTable)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -45,21 +46,21 @@ namespace Publishing_center
 			this.ChoiceTableLabel.TabIndex = 1;
 			this.ChoiceTableLabel.Text = "Название таблицы";
 			// 
-			// comboBox1
+			// tableName_ComboBox
 			// 
-			this.comboBox1.FormattingEnabled = true;
-			this.comboBox1.Items.AddRange(new object[] {
+			this.tableName_ComboBox.FormattingEnabled = true;
+			this.tableName_ComboBox.Items.AddRange(new object[] {
             "Писатель",
             "Контракт",
             "Книга",
             "Заказчик",
             "Заказ",
             "Авторство"});
-			this.comboBox1.Location = new System.Drawing.Point(12, 44);
-			this.comboBox1.Name = "comboBox1";
-			this.comboBox1.Size = new System.Drawing.Size(151, 28);
-			this.comboBox1.TabIndex = 2;
-			this.comboBox1.TextChanged += new System.EventHandler(this.ChoiceTable_TextUpdate);
+			this.tableName_ComboBox.Location = new System.Drawing.Point(12, 44);
+			this.tableName_ComboBox.Name = "tableName_ComboBox";
+			this.tableName_ComboBox.Size = new System.Drawing.Size(151, 28);
+			this.tableName_ComboBox.TabIndex = 2;
+			this.tableName_ComboBox.TextChanged += new System.EventHandler(this.ChoiceTable_TextUpdate);
 			// 
 			// dataTable
 			// 
@@ -71,10 +72,12 @@ namespace Publishing_center
 			this.dataTable.RowTemplate.Height = 29;
 			this.dataTable.Size = new System.Drawing.Size(735, 371);
 			this.dataTable.TabIndex = 3;
+			this.dataTable.CurrentCellChanged += new System.EventHandler(this.dataTable_CurrentCellChanged);
+			this.dataTable.UserAddedRow += new System.Windows.Forms.DataGridViewRowEventHandler(this.dataTable_UserAddedRow);
 			// 
 			// uploadDataButton
 			// 
-			this.uploadDataButton.Location = new System.Drawing.Point(538, 42);
+			this.uploadDataButton.Location = new System.Drawing.Point(528, 42);
 			this.uploadDataButton.Name = "uploadDataButton";
 			this.uploadDataButton.Size = new System.Drawing.Size(209, 62);
 			this.uploadDataButton.TabIndex = 4;
@@ -82,14 +85,27 @@ namespace Publishing_center
 			this.uploadDataButton.UseVisualStyleBackColor = true;
 			this.uploadDataButton.Click += new System.EventHandler(this.UploadData);
 			// 
+			// deleteButton
+			// 
+			this.deleteButton.BackColor = System.Drawing.Color.PeachPuff;
+			this.deleteButton.Font = new System.Drawing.Font("Segoe UI", 6.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+			this.deleteButton.Location = new System.Drawing.Point(408, 44);
+			this.deleteButton.Name = "deleteButton";
+			this.deleteButton.Size = new System.Drawing.Size(80, 60);
+			this.deleteButton.TabIndex = 5;
+			this.deleteButton.Text = "Удалить выбранную строку";
+			this.deleteButton.UseVisualStyleBackColor = false;
+			this.deleteButton.Click += new System.EventHandler(this.DeleteButtonClick);
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(759, 597);
+			this.Controls.Add(this.deleteButton);
 			this.Controls.Add(this.uploadDataButton);
 			this.Controls.Add(this.dataTable);
-			this.Controls.Add(this.comboBox1);
+			this.Controls.Add(this.tableName_ComboBox);
 			this.Controls.Add(this.ChoiceTableLabel);
 			this.Name = "MainForm";
 			this.Text = "Издательский центр";
@@ -102,9 +118,10 @@ namespace Publishing_center
 		#endregion
 
 		private System.Windows.Forms.Label ChoiceTableLabel;
-		private System.Windows.Forms.ComboBox comboBox1;
+		private System.Windows.Forms.ComboBox tableName_ComboBox;
 		private System.Windows.Forms.DataGridView dataTable;
 		private System.Windows.Forms.Button uploadDataButton;
+		private System.Windows.Forms.Button deleteButton;
 	}
 }
 
