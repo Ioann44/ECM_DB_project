@@ -103,6 +103,14 @@ namespace Publishing_center
 			// delete rows
 			foreach (int rowIndex in Tools.rowsToDel)
 			{
+				if (rowIndex >= n)
+				{
+					for (int j = 0; j < dataTable.ColumnCount; j++)
+					{
+						dataTable[j, rowIndex].Style.BackColor = Color.White;
+					}
+					continue;
+				}
 				commandData[1] = (string[])dataSrc[rowIndex + 1].Clone();
 				DBClient.DeleteData(tableName_ComboBox.Text, commandData);
 			}
