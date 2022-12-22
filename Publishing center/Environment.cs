@@ -6,6 +6,7 @@ namespace Publishing_center
 {
 	static class Environment
 	{
-		public static string DB_name = "localhost";
+		public static readonly string DB_name = "localhost";
+		public static readonly string PathToFont = @"..\..\..\arial-unicode-ms.ttf";
 	}
 }
