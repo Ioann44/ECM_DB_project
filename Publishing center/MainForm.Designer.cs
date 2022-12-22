@@ -35,7 +35,9 @@ namespace Publishing_center
 			this.uploadDataButton = new System.Windows.Forms.Button();
 			this.deleteButton = new System.Windows.Forms.Button();
 			this.exportToPdf_Button = new System.Windows.Forms.Button();
+			this.YearInputField = new System.Windows.Forms.NumericUpDown();
 			((System.ComponentModel.ISupportInitialize)(this.dataTable)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.YearInputField)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// ChoiceTableLabel
@@ -101,19 +103,42 @@ namespace Publishing_center
 			// exportToPdf_Button
 			// 
 			this.exportToPdf_Button.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
-			this.exportToPdf_Button.Location = new System.Drawing.Point(284, 42);
+			this.exportToPdf_Button.Location = new System.Drawing.Point(528, 139);
 			this.exportToPdf_Button.Name = "exportToPdf_Button";
-			this.exportToPdf_Button.Size = new System.Drawing.Size(80, 62);
+			this.exportToPdf_Button.Size = new System.Drawing.Size(209, 27);
 			this.exportToPdf_Button.TabIndex = 6;
 			this.exportToPdf_Button.Text = "PDF";
 			this.exportToPdf_Button.UseVisualStyleBackColor = false;
 			this.exportToPdf_Button.Click += new System.EventHandler(this.exportToPdf_Button_Click);
+			// 
+			// YearInputField
+			// 
+			this.YearInputField.Location = new System.Drawing.Point(408, 139);
+			this.YearInputField.Maximum = new decimal(new int[] {
+            2100,
+            0,
+            0,
+            0});
+			this.YearInputField.Minimum = new decimal(new int[] {
+            1900,
+            0,
+            0,
+            0});
+			this.YearInputField.Name = "YearInputField";
+			this.YearInputField.Size = new System.Drawing.Size(80, 27);
+			this.YearInputField.TabIndex = 7;
+			this.YearInputField.Value = new decimal(new int[] {
+            2022,
+            0,
+            0,
+            0});
 			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(759, 597);
+			this.Controls.Add(this.YearInputField);
 			this.Controls.Add(this.exportToPdf_Button);
 			this.Controls.Add(this.deleteButton);
 			this.Controls.Add(this.uploadDataButton);
@@ -123,6 +148,7 @@ namespace Publishing_center
 			this.Name = "MainForm";
 			this.Text = "Издательский центр";
 			((System.ComponentModel.ISupportInitialize)(this.dataTable)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.YearInputField)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -136,6 +162,7 @@ namespace Publishing_center
 		private System.Windows.Forms.Button uploadDataButton;
 		private System.Windows.Forms.Button deleteButton;
 		private System.Windows.Forms.Button exportToPdf_Button;
+		private System.Windows.Forms.NumericUpDown YearInputField;
 	}
 }
 

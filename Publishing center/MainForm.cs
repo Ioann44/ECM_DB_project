@@ -185,7 +185,7 @@ namespace Publishing_center
 
 		private void exportToPdf_Button_Click(object sender, EventArgs e)
 		{
-			PDF_Exporter.WriteToPdf(dataTable);
+			PDF_Exporter.CreateReport((int)YearInputField.Value);
 		}
 	}
 }
