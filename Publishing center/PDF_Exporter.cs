@@ -131,7 +131,19 @@ namespace Publishing_center
 		public static void CreateReport(int year)
 		{
 			// Книга-0, Себестоимость-1, Цена-2, Тираж-3, Количество-4, Заказчик-5, Год-6
-			string[][] db_data = DBClient.ReadMatrix($"select * from InfoForReport where Год = {year};");
+			string[][] db_data = DBClient.ReadMatrix(
+				"select " +
+				"Книга.Название as Книга, " +
+				"Себестоимость_руб, " +
+				"Цена_продажи_руб, " +
+				"Тираж, " +
+				"Количество_экземпляров_заказываемой_книги, " +
+				"Заказчик.Название as Заказчик, " +
+				"year(Дата_выполнения_заказа) as Год " +
+				"from Книга " +
+				"join Заказ on Книга.Шифр_книги = Заказ.Шифр_книги " +
+				"join Заказчик on Заказ.ID = Заказчик.ID " +
+				$"where year(Дата_выполнения_заказа) = {year};");
 
 			// Headers
 			// Книга-0, Себестоимость-1, Цена-2, Количество-3, Прибыль-4
@@ -160,7 +172,7 @@ namespace Publishing_center
 					CustomerInfo customerInfo = new CustomerInfo();
 					customers_dict[customer] = customerInfo;
 				}
-				
+
 				CustomerInfo curInfo = customers_dict[customer];
 				curInfo.dataTable.Add(new string[] { db_data[i][0], cost.ToString(), price.ToString(), amount.ToString(), profit.ToString() });
 
