@@ -71,6 +71,7 @@ namespace Publishing_center
 		/// <param name="data">Array 3xNumOfCols, where first row - names of attributes, second row - source data, third row - new data</param>
 		public static bool UpdateData(in string tableName, in string[][] data)
 		{
+			// generate command
 			string command = $"update {tableName} set ";
 			for (int j = 0; j < data[0].Length; j++)
 			{
@@ -107,7 +108,7 @@ namespace Publishing_center
 
 		public static bool InsertData(in string tableName, in string[][] data)
 		{
-			// insert Авторство (ID_автора, Шифр_книги) values ('1', '1');
+			// generate command
 			string command = $"insert {tableName} (";
 			for (int j = 0; j < data[0].Length - 1; j++)
 			{
@@ -120,6 +121,7 @@ namespace Publishing_center
 				command += data2j + (j == data[0].Length - 1 ? ' ' : ',');
 			}
 			command += ");";
+			// execute command
 			return ExecuteModificationCommand(command, connectionString) != 0;
 		}
 

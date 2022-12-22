@@ -182,5 +182,10 @@ namespace Publishing_center
 				dataTable.Columns[col_i].ReadOnly = false;
 			}
 		}
+
+		private void exportToPdf_Button_Click(object sender, EventArgs e)
+		{
+			PDF_Exporter.WriteToPdf(dataTable);
+		}
 	}
 }

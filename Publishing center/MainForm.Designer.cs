@@ -34,6 +34,7 @@ namespace Publishing_center
 			this.dataTable = new System.Windows.Forms.DataGridView();
 			this.uploadDataButton = new System.Windows.Forms.Button();
 			this.deleteButton = new System.Windows.Forms.Button();
+			this.exportToPdf_Button = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.dataTable)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -89,19 +90,31 @@ namespace Publishing_center
 			// 
 			this.deleteButton.BackColor = System.Drawing.Color.PeachPuff;
 			this.deleteButton.Font = new System.Drawing.Font("Segoe UI", 6.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-			this.deleteButton.Location = new System.Drawing.Point(408, 44);
+			this.deleteButton.Location = new System.Drawing.Point(408, 42);
 			this.deleteButton.Name = "deleteButton";
-			this.deleteButton.Size = new System.Drawing.Size(80, 60);
+			this.deleteButton.Size = new System.Drawing.Size(80, 62);
 			this.deleteButton.TabIndex = 5;
 			this.deleteButton.Text = "Удалить выбранную строку";
 			this.deleteButton.UseVisualStyleBackColor = false;
 			this.deleteButton.Click += new System.EventHandler(this.DeleteButtonClick);
+			// 
+			// exportToPdf_Button
+			// 
+			this.exportToPdf_Button.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+			this.exportToPdf_Button.Location = new System.Drawing.Point(284, 42);
+			this.exportToPdf_Button.Name = "exportToPdf_Button";
+			this.exportToPdf_Button.Size = new System.Drawing.Size(80, 62);
+			this.exportToPdf_Button.TabIndex = 6;
+			this.exportToPdf_Button.Text = "PDF";
+			this.exportToPdf_Button.UseVisualStyleBackColor = false;
+			this.exportToPdf_Button.Click += new System.EventHandler(this.exportToPdf_Button_Click);
 			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(759, 597);
+			this.Controls.Add(this.exportToPdf_Button);
 			this.Controls.Add(this.deleteButton);
 			this.Controls.Add(this.uploadDataButton);
 			this.Controls.Add(this.dataTable);
@@ -122,6 +135,7 @@ namespace Publishing_center
 		private System.Windows.Forms.DataGridView dataTable;
 		private System.Windows.Forms.Button uploadDataButton;
 		private System.Windows.Forms.Button deleteButton;
+		private System.Windows.Forms.Button exportToPdf_Button;
 	}
 }
 
